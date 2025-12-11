@@ -1,11 +1,9 @@
 import { LlmProtocol } from "./llm-protocol";
-import { ProviderResponse } from "../providers/llm-provider";
-export interface LlmProtocolCommunication {
-    prompt(message: string): Promise<any>;
-}
-export declare class LlmProtocolCommunicationImpl implements LlmProtocolCommunication {
+import { LlmProvider } from "../providers/llm-provider";
+export type Message = string | Record<string, any>;
+export declare class LlmProtocolCommunication {
     private protocol;
-    private llmPromptFn;
-    constructor(protocol: LlmProtocol, llmPromptFn: (message: string) => Promise<ProviderResponse>);
-    prompt(message: string): Promise<any>;
+    private provider;
+    constructor(protocol: LlmProtocol, provider: LlmProvider);
+    send(message: Message): Promise<any>;
 }

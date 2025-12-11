@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Llm = void 0;
 require("reflect-metadata");
 const di_1 = require("@filipgorny/di");
-const llm_protocol_communication_1 = require("./protocol/llm-protocol-communication");
+const llm_communication_channel_1 = require("./protocol/llm-communication-channel");
 let Llm = class Llm {
     constructor(provider) {
         this.provider = provider;
@@ -23,8 +23,8 @@ let Llm = class Llm {
     async prompt(message) {
         return this.provider.prompt(message);
     }
-    defineProtocol(protocol) {
-        return new llm_protocol_communication_1.LlmProtocolCommunicationImpl(protocol, this.prompt.bind(this));
+    createProtocolChannel(protocol) {
+        return new llm_communication_channel_1.LlmCommunicationChannel(protocol, this.provider);
     }
 };
 exports.Llm = Llm;

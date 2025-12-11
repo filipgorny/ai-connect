@@ -1,6 +1,8 @@
-import { LlmProvider, ProviderResponse } from "./llm-provider";
+import { LlmProvider } from "./llm-provider";
+import { ProviderResponse } from "./provider-response";
 
-export class ChatGPTProvider implements LlmProvider {
+export class OpenAIProvider implements LlmProvider {
+  static readonly PROVIDER_ID = "OPENAI";
   private apiKey: string;
   private apiUrl = "https://api.openai.com/v1/chat/completions";
 
@@ -23,24 +25,20 @@ export class ChatGPTProvider implements LlmProvider {
       });
 
       if (!response.ok) {
-        return {
-          success: false,
-          message: `API error: ${response.status} ${response.statusText}`,
-        };
+        const errorText = await response.text();
+        return new ProviderResponse(
+          `API error: ${response.status} ${response.statusText} - ${errorText}`,
+        );
       }
 
       const data: any = await response.json();
       const content = data.choices?.[0]?.message?.content || "";
 
-      return {
-        success: true,
-        message: content,
-      };
+      return new ProviderResponse(content);
     } catch (error) {
-      return {
-        success: false,
-        message: error instanceof Error ? error.message : "Unknown error",
-      };
+      return new ProviderResponse(
+        error instanceof Error ? error.message : "Unknown error",
+      );
     }
   }
 }

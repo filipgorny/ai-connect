@@ -1,7 +1,6 @@
-export interface ProviderResponse {
-  success: boolean;
-  message: string;
-}
+import { ProviderResponse } from "./provider-response";
+
+export { ProviderResponse };
 
 export interface LlmProvider {
   prompt(message: string): Promise<ProviderResponse>;
