@@ -1,0 +1,35 @@
+{
+  "name": "@filipgorny/ai-connect",
+  "version": "0.0.1",
+  "description": "AI/LLM connection library with protocol support and dependency injection",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "chatgpt",
+    "protocol",
+    "dependency-injection"
+  ],
+  "author": "Filip Gorny",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:filipgorny/ai-connect.git"
+  },
+  "dependencies": {
+    "@filipgorny/di": ">=0.0.1",
+    "reflect-metadata": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.2"
+  },
+  "peerDependencies": {
+    "@filipgorny/di": ">=0.0.1"
+  }
+}
