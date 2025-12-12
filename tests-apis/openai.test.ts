@@ -2,7 +2,6 @@ import { OpenAIProvider } from "@/providers/openai-provider";
 import { Chat } from "@/chat/chat";
 import { LlmProtocol } from "@/protocol/llm-protocol";
 import { LlmCommunicationChannel } from "@/protocol/llm-communication-channel";
-import { ChannelInput } from "@/protocol/channel-input";
 
 describe("OpenAI Integration Tests", () => {
   let provider: OpenAIProvider;
@@ -40,8 +39,7 @@ describe("OpenAI Integration Tests", () => {
   }, 30000);
 
   it("should use LlmCommunicationChannel with protocol", async () => {
-    const input = new ChannelInput({ question: "What is 2 + 2?" });
-    const response = await channel.send(input);
+    const response = await channel.send({ question: "What is 2 + 2?" });
     expect(response.raw).toBeDefined();
     expect(response.fields).toBeDefined();
     expect(response.valid).toBe(true); // Checks if fields are populated

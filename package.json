@@ -1,7 +1,7 @@
 {
   "name": "@filipgorny/ai-connect",
   "version": "0.0.1",
-  "description": "AI/LLM connection library with protocol support and dependency injection",
+  "description": "AI/LLM connection library with protocol support and more",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -36,5 +36,8 @@
   },
   "peerDependencies": {
     "@filipgorny/di": ">=0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

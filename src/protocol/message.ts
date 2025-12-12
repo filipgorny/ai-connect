@@ -1,3 +1,1 @@
-import { ChannelInput } from "./channel-input";
-
-export type Message = ChannelInput;
+export type Message = Record<string, string>;

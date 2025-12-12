@@ -19,7 +19,22 @@ npm install @filipgorny/ai-connect @filipgorny/di reflect-metadata
 
 ## Quick Start
 
-### Basic Chat
+### Basic Chat (Without Container)
+
+```typescript
+import { Llm, OpenAIProvider } from "@filipgorny/ai-connect";
+
+// Create LLM instance directly
+const provider = new OpenAIProvider("your-openai-api-key");
+const llm = new Llm(provider);
+
+// Create chat and send message
+const chat = llm.createChat();
+const response = await chat.message("Hello, how are you?");
+console.log(response.message); // "I'm doing well, thank you for asking!"
+```
+
+### Basic Chat (With Dependency Injection)
 
 ```typescript
 import "reflect-metadata";
@@ -46,7 +61,7 @@ console.log(response.message); // "I'm doing well, thank you for asking!"
 ### Protocol-Based Communication
 
 ```typescript
-import { LlmProtocol, ChannelInput } from "@filipgorny/ai-connect";
+import { LlmProtocol } from "@filipgorny/ai-connect";
 
 // Define protocol
 const protocol = new LlmProtocol()
@@ -57,9 +72,8 @@ const protocol = new LlmProtocol()
 // Create channel
 const channel = llm.createProtocolChannel(protocol);
 
-// Send structured input
-const input = new ChannelInput({ task: "Review the quarterly report" });
-const response = await channel.send(input);
+// Send structured input (plain object)
+const response = await channel.send({ task: "Review the quarterly report" });
 
 // Access parsed fields
 if (response.valid) {

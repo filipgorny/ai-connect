@@ -2,7 +2,6 @@ import { LlmProtocol } from "./llm-protocol";
 import { LlmProvider } from "../providers/llm-provider";
 import { ProtocolResponse } from "./protocol-response";
 import { OutputFieldValue } from "./output-field-value";
-import { Message } from "./message";
 import { ChannelInput } from "./channel-input";
 
 export class LlmCommunicationChannel {
@@ -20,12 +19,13 @@ export class LlmCommunicationChannel {
     }
   }
 
-  async send(message: Message): Promise<ProtocolResponse> {
-    // Validate input against protocol
-    this.validateInput(message);
+  async send(message: Record<string, string>): Promise<ProtocolResponse> {
+    // Create ChannelInput from plain object and validate
+    const channelInput = new ChannelInput(message);
+    this.validateInput(channelInput);
 
     // Build structured message from ChannelInput
-    const inputPrompt = this.protocol.buildInputPrompt(message.toObject());
+    const inputPrompt = this.protocol.buildInputPrompt(channelInput.toObject());
     const promptMessage = inputPrompt;
 
     // Add output format instructions

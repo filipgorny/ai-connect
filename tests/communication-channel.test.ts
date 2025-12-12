@@ -1,6 +1,5 @@
 import { LlmCommunicationChannel } from "@/protocol/llm-communication-channel";
 import { LlmProtocol } from "@/protocol/llm-protocol";
-import { ChannelInput } from "@/protocol/channel-input";
 import { MockProvider } from "@/providers/mock-provider";
 
 describe("LlmCommunicationChannel", () => {
@@ -10,6 +9,7 @@ describe("LlmCommunicationChannel", () => {
 
   beforeEach(() => {
     protocol = new LlmProtocol()
+      .defineInputField("query", "The query to ask")
       .defineOutputField("name", "The name")
       .defineOutputField("age", "The age");
 
@@ -19,9 +19,8 @@ describe("LlmCommunicationChannel", () => {
     channel = new LlmCommunicationChannel(protocol, mockProvider);
   });
 
-  it("should send ChannelInput and return ProtocolResponse", async () => {
-    const input = new ChannelInput({ query: "Who is John?" });
-    const response = await channel.send(input);
+  it("should send plain object and return ProtocolResponse", async () => {
+    const response = await channel.send({ query: "Who is John?" });
 
     expect(response.raw).toBe('{"name": "John", "age": "30"}');
     expect(response.fields.get("name")).toBe("John");
@@ -29,8 +28,7 @@ describe("LlmCommunicationChannel", () => {
   });
 
   it("should validate input fields", async () => {
-    const input = new ChannelInput({}); // Missing required fields
-    await expect(channel.send(input)).rejects.toThrow(
+    await expect(channel.send({})).rejects.toThrow(
       "Missing required input field",
     );
   });
