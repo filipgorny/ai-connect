@@ -40,15 +40,6 @@ export class LlmProtocol {
     return this;
   }
 
-  // Legacy methods for backward compatibility
-  defineField(name: string, description: string): this {
-    return this.defineOutputField(name, description);
-  }
-
-  defineFields(fields: LlmProtocolField[]): this {
-    return this.defineOutputFields(fields);
-  }
-
   getInputFields(): InputField[] {
     return [...this.inputFields];
   }
@@ -83,10 +74,5 @@ export class LlmProtocol {
       .join("\n");
 
     return `\n\nRESPONSE FORMAT:\nRespond with a JSON object containing these fields:\n${fieldsDescription}\n\nProvide only valid JSON, no additional text.`;
-  }
-
-  // Legacy method
-  buildPromptSuffix(): string {
-    return this.buildOutputPromptSuffix();
   }
 }
